@@ -1,0 +1,54 @@
+
+estoque = []
+
+
+def cadastrar_produto():
+    nome = input("Digite o nome do produto: ")
+    quantidade = int(input("Digite a quantidade do produto: "))
+    preco = float(input("Digite o preço do produto: "))
+    produto = {
+        "nome": nome,
+        "quantidade": quantidade,
+        "preco": preco
+    }
+    estoque.append(produto)
+    print(f"Produto'{nome}' adicionado com sucesso!")
+
+#Função para listar todos os produtos no estoque
+
+def listar_produtos():
+    if not estoque:
+        print("O estoque está vazio.")
+    else:
+        print("\nProdutos noo estoque:")
+        for produto in estoque:
+            print(f"nome: {produto['nome']}, Quantidade: {produto['quantidade']}, Preço: R$ {produto['preco']}")
+
+#Função para calcular o valor total do estoque
+def calcular_valor_total():
+    total = 0
+    for produto in estoque:
+        total += produto['quantidade'] * produto['preco']
+    print(f"O valor total do estoque é: R$ {total:.2f}")
+
+#Menu principal (Está aqui pq foi a ultima coisa que lembrei kkkk)
+while True:
+    print("\nSeja bem-vindo ao seu Estoque Virtual!")
+    print("1 - Cadastrar produto")
+    print("2 - Verificar produtos do estoque")
+    print("3 - Calcular valor total do estoque")
+    print("4 - Sair")
+    
+    resposta = input("O que gostaria de fazer? ")
+
+    if resposta == "1":
+        cadastrar_produto()
+    elif resposta == "2":
+        listar_produtos()
+    elif resposta == "3":
+        calcular_valor_total()
+    elif resposta == "4":
+        print("Saindo do sistema. Até logo!")
+        break
+    else:
+        print("Opção inválida. Tente novamente.")
