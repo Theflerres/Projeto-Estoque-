@@ -4,7 +4,7 @@ estoque = []
 # Função para cadastrar um novo produto no estoque
 def cadastrar_produto():
     """
-    #Solicita ao usuário os dados de um produto e o adiciona ao estoque.#
+    Solicita ao usuário os dados de um produto e o adiciona ao estoque.
     """
     nome = input("Digite o nome do produto: ")
     quantidade = int(input("Digite a quantidade do produto: "))
@@ -31,15 +31,22 @@ def listar_produtos():
         for produto in estoque:
             print(f"Nome: {produto['nome']}, Quantidade: {produto['quantidade']}, Preço: R$ {produto['preco']:.2f}")
 
-# Função para calcular o valor total do estoque
+# Função para calcular o valor total do estoque e exibir produtos com seus valores individuais
 def calcular_valor_total():
     """
-    Calcula e exibe o valor total de todos os produtos no estoque.
+    Calcula e exibe o valor total do estoque, 
+    incluindo os produtos individuais e seus valores totais.
     """
-    total = 0
-    for produto in estoque:
-        total += produto['quantidade'] * produto['preco']
-    print(f"O valor total do estoque é: R$ {total:.2f}")
+    if not estoque:
+        print("O estoque está vazio.")
+    else:
+        total = 0
+        print("\nResumo do estoque:")
+        for produto in estoque:
+            valor_produto = produto['quantidade'] * produto['preco']
+            total += valor_produto
+            print(f"Nome: {produto['nome']}, Quantidade: {produto['quantidade']}, Preço Unitário: R$ {produto['preco']:.2f}, Valor Total: R$ {valor_produto:.2f}")
+        print(f"\nValor total do estoque: R$ {total:.2f}")
 
 # Função principal para exibir o menu e gerenciar as operações
 def exibir_menu():
