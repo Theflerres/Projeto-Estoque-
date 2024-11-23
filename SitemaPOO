@@ -1,0 +1,87 @@
+class Produto:
+    """
+    Representa um produto no estoque.
+    """
+    def __init__(self, nome, quantidade, preco):
+        self.nome = nome
+        self.quantidade = quantidade
+        self.preco = preco
+
+    def __str__(self):
+        return f"Nome: {self.nome}, Quantidade: {self.quantidade}, Preço: R$ {self.preco:.2f}"
+
+
+class Estoque:
+    """
+    Gerencia o estoque de produtos.
+    """
+    def __init__(self):
+        self.produtos = []
+
+    def cadastrar_produto(self, nome, quantidade, preco):
+        """
+        Adiciona um novo produto ao estoque.
+        """
+        produto = Produto(nome, quantidade, preco)
+        self.produtos.append(produto)
+        print(f"Produto '{nome}' adicionado com sucesso!")
+
+    def listar_produtos(self):
+        """
+        Exibe todos os produtos cadastrados no estoque.
+        """
+        if not self.produtos:
+            print("O estoque está vazio.")
+        else:
+            print("\nProdutos no estoque:")
+            for produto in self.produtos:
+                print(produto)
+
+    def calcular_valor_total(self):
+        """
+        Calcula e exibe o valor total do estoque.
+        """
+        total = sum(produto.quantidade * produto.preco for produto in self.produtos)
+        print(f"O valor total do estoque é: R$ {total:.2f}")
+
+
+class SistemaEstoque:
+    """
+    Interface principal para interação com o estoque.
+    """
+    def __init__(self):
+        self.estoque = Estoque()
+
+    def exibir_menu(self):
+        """
+        Exibe o menu principal e processa as opções escolhidas pelo usuário.
+        """
+        while True:
+            print("\nSeja bem-vindo ao seu Estoque Virtual!")
+            print("1 - Cadastrar produto")
+            print("2 - Verificar produtos do estoque")
+            print("3 - Calcular valor total do estoque")
+            print("4 - Sair")
+            
+            resposta = input("O que gostaria de fazer? ")
+            
+            if resposta == "1":
+                nome = input("Digite o nome do produto: ")
+                quantidade = int(input("Digite a quantidade do produto: "))
+                preco = float(input("Digite o preço do produto: "))
+                self.estoque.cadastrar_produto(nome, quantidade, preco)
+            elif resposta == "2":
+                self.estoque.listar_produtos()
+            elif resposta == "3":
+                self.estoque.calcular_valor_total()
+            elif resposta == "4":
+                print("Saindo do sistema. Até logo!")
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
+
+
+# Inicializa o sistema e exibe o menu
+if __name__ == "__main__":
+    sistema = SistemaEstoque()
+    sistema.exibir_menu()
