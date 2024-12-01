@@ -1,7 +1,6 @@
 # Lista global para armazenar os produtos
 estoque = []
 
-# Função para cadastrar um novo produto no estoque
 def cadastrar_produto():
     """
     Solicita ao usuário os dados de um produto e o adiciona ao estoque.
@@ -19,7 +18,6 @@ def cadastrar_produto():
     estoque.append(produto)
     print(f"Produto '{nome}' adicionado com sucesso!")
 
-# Função para listar todos os produtos no estoque
 def listar_produtos():
     """
     Exibe todos os produtos cadastrados no estoque.
@@ -31,10 +29,9 @@ def listar_produtos():
         for produto in estoque:
             print(f"Nome: {produto['nome']}, Quantidade: {produto['quantidade']}, Preço: R$ {produto['preco']:.2f}")
 
-# Função para calcular o valor total do estoque e exibir produtos com seus valores individuais
 def calcular_valor_total():
     """
-    Calcula e exibe o valor total do estoque, 
+    Calcula e exibe o valor total do estoque,
     incluindo os produtos individuais e seus valores totais.
     """
     if not estoque:
@@ -48,7 +45,47 @@ def calcular_valor_total():
             print(f"Nome: {produto['nome']}, Quantidade: {produto['quantidade']}, Preço Unitário: R$ {produto['preco']:.2f}, Valor Total: R$ {valor_produto:.2f}")
         print(f"\nValor total do estoque: R$ {total:.2f}")
 
-# Função principal para exibir o menu e gerenciar as operações
+def remover_produto():
+    """
+    Remove um produto do estoque com base no nome informado.
+    """
+    nome = input("Digite o nome do produto que deseja remover: ")
+    for produto in estoque:
+        if produto['nome'].lower() == nome.lower():
+            estoque.remove(produto)
+            print(f"Produto '{nome}' removido com sucesso!")
+            return
+    print(f"Produto '{nome}' não encontrado no estoque.")
+
+def atualizar_produto():
+    """
+    Atualiza a quantidade ou o preço de um produto no estoque.
+    """
+    nome = input("Digite o nome do produto que deseja atualizar: ")
+    for produto in estoque:
+        if produto['nome'].lower() == nome.lower():
+            print("\n1 - Atualizar quantidade")
+            print("2 - Atualizar preço")
+            opcao = input("Escolha uma opção: ")
+            if opcao == "1":
+                nova_quantidade = int(input("Digite a nova quantidade: "))
+                if nova_quantidade >= 0:
+                    produto['quantidade'] = nova_quantidade
+                    print(f"Quantidade do produto '{nome}' atualizada para {nova_quantidade}.")
+                else:
+                    print("Quantidade inválida. Não é possível ter quantidade negativa.")
+            elif opcao == "2":
+                novo_preco = float(input("Digite o novo preço: "))
+                if novo_preco >= 0:
+                    produto['preco'] = novo_preco
+                    print(f"Preço do produto '{nome}' atualizado para R$ {novo_preco:.2f}.")
+                else:
+                    print("Preço inválido. Não é possível ter preço negativo.")
+            else:
+                print("Opção inválida.")
+            return
+    print(f"Produto '{nome}' não encontrado no estoque.")
+
 def exibir_menu():
     """
     Exibe o menu principal e processa as opções escolhidas pelo usuário.
@@ -58,7 +95,9 @@ def exibir_menu():
         print("1 - Cadastrar produto")
         print("2 - Verificar produtos do estoque")
         print("3 - Calcular valor total do estoque")
-        print("4 - Sair")
+        print("4 - Remover produto do estoque")
+        print("5 - Atualizar produto")
+        print("6 - Sair")
         
         resposta = input("O que gostaria de fazer? ")
         
@@ -69,11 +108,14 @@ def exibir_menu():
         elif resposta == "3":
             calcular_valor_total()
         elif resposta == "4":
+            remover_produto()
+        elif resposta == "5":
+            atualizar_produto()
+        elif resposta == "6":
             print("Saindo do sistema. Até logo!")
             break
         else:
             print("Opção inválida. Tente novamente.")
 
-# Inicia o programa chamando a função principal
 if __name__ == "__main__":
     exibir_menu()
